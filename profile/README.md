@@ -1,0 +1,1 @@
+The Niema-Docker GitHub organization contains a collection of repositories used to automatically produce minimal Docker containers. Each repository contains a `Dockerfile` and is linked to a Docker Hub repository that automatically builds a new container when the `Dockerfile` is edited.
