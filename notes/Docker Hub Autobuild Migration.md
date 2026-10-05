@@ -19,8 +19,33 @@ I need to configure the GitHub repository linked to the Docker container so that
     * "Name" = `DOCKER_TOKEN` and "Secret" = my Docker Hub Personal Access Token
 
 # Step 2: Create GitHub Action Workflow
-I need to create an autobuild GitHub Actions workflow in the GitHub repository linked to the Docker container. Docker provides an [example GitHub Actions workflow](https://github.com/docker/autobuilds-actions/blob/main/.github/workflows/simple-build.yaml). I created one for my Minimap2 GitHub repository ([`.github/workflows/dockerhub.yaml`](https://github.com/Niema-Docker/minimap2/blob/main/.github/workflows/dockerhub.yaml)) that I should be used as a template for each subsequent repository. The only changes that should be needed are the following:
+I need to create an autobuild GitHub Actions workflow in the GitHub repository linked to the Docker container. Docker provides an [example GitHub Actions workflow](https://github.com/docker/autobuilds-actions/blob/main/.github/workflows/simple-build.yaml). I created one for my Minimap2 GitHub repository ([`.github/workflows/dockerhub.yml`](https://github.com/Niema-Docker/minimap2/blob/main/.github/workflows/dockerhub.yml)) that I should be used as a template for each subsequent repository. The only changes that should be needed are the following:
 
 * If the main branch of the GitHub repository is anything other than `main` (e.g. `master`), I need to change the branch listed in `on: push: branches:` from `main` to that branch name.
 * If the versioned release tags are named anything other than `*.*` (e.g. my tools are typically `*.*.*` or `v*.*.*`), I need to change the tag pattern listed in `on: push: tags:` from `"*.*"` to whatever version number pattern the tool (and thus GitHub repository) uses.
 * I need to change `env: DOCKER_REPOSITORY_NAME:` to the name of the Docker Hub repository.
+
+# Step 3: Delete Docker Hub Build Configuration
+Once the GitHub Action has successfully pushed a container to Docker Hub, I need to delete the build configuration from the Docker Hub repository.
+
+1. Go to the Docker Hub repository's "Builds" tab (`https://hub.docker.com/repository/docker/niemasd/<REPO_NAME>/builds`).
+2. Click "Configure automated builds" (`https://hub.docker.com/repository/docker/niemasd/<REPO_NAME>/builds/edit`).
+    * **I can jump straight to the URL in bullet 2, skipping bullet 1, for convenience.**
+3. Click "Delete Build Configuration"
+
+# Summary
+
+1. **Create GitHub repository secrets**
+    * URL: `https://github.com/<USER_OR_ORG>/<REPO_NAME>/settings/secrets/actions/new`
+    * "Name" = `DOCKER_USERNAME` and "Secret" = `niemasd` (my Docker username)
+    * "Name" = `DOCKER_TOKEN` and "Secret" = my Docker Hub Personal Access Token
+2. **Create the GitHub Action workflow**
+    * URL: `https://github.com/<USER_OR_ORG>/<REPO_NAME>/new/main/.github/workflows`
+    * File Name: `dockerhub.yml`
+    * Copy the [Minimap2 workflow](https://github.com/Niema-Docker/minimap2/blob/main/.github/workflows/dockerhub.yml) as a template
+    * Change `env: DOCKER_REPOSITORY_NAME:` to the name of the Docker Hub repository
+    * If the tool uses a version number pattern that isn't `*.*`, change `on: push: tags:` to the version number pattern of the tool (e.g. `v*.*.*`)
+    * If the main branch isn't `main`, change `on: push: branches:` to the name of the main branch (e.g. `master`)
+3. **Delete the Docker Hub Build Configuration**
+    * URL: `https://hub.docker.com/repository/docker/niemasd/<REPO_NAME>/builds/edit`
+    * Click "Delete Build Configuration"
