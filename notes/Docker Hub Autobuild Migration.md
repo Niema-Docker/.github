@@ -6,10 +6,20 @@ All of my Docker containers are in my personal [niemasd](https://hub.docker.com/
 
 This step does not need to be repeated ever again: I should use this same Personal Access Token for all of my Docker containers.
 
-# Step 1: Create GitHub Action Workflow
-I need to create an autobuild GitHub Actions workflow in the GitHub repository currently linked to the Docker container. Docker provides an [example GitHub Actions workflow](https://github.com/docker/autobuilds-actions/blob/main/.github/workflows/simple-build.yaml).
+# Step 1: Add Docker Hub Access Token to GitHub Repository
+I need to configure the GitHub repository linked to the Docker container so that it can use the Personal Access Token I created in Step 0:
 
-I created one for my [`minimap2` GitHub repository](https://github.com/Niema-Docker/minimap2/blob/main/.github/workflows/dockerhub.yaml) that I should be used as a template for each subsequent repository. The only changes that should be needed are the following:
+1. Go to the "Settings" tab of the GitHub repository (`https://github.com/<USER_OR_ORG>/<REPO_NAME>/settings`).
+2. Expand the "Secrets and variables" accordion in the left menu bar (under "Security and quality").
+3. Click "Actions" (`https://github.com/<USER_OR_ORG>/<REPO_NAME>/settings/secrets/actions`).
+4. Click "New repository secret" (`https://github.com/<USER_OR_ORG>/<REPO_NAME>/settings/secrets/actions/new`).
+    * **I can jump straight to the URL in bullet 4, skipping bullets 1-3, for convenience.**
+5. Create the following 2 repository secrets:
+    * "Name" = `DOCKER_USERNAME` and "Secret" = `niemasd` (my Docker username)
+    * "Name" = `DOCKER_TOKEN` and "Secret" = my Docker Hub Personal Access Token
+
+# Step 2: Create GitHub Action Workflow
+I need to create an autobuild GitHub Actions workflow in the GitHub repository linked to the Docker container. Docker provides an [example GitHub Actions workflow](https://github.com/docker/autobuilds-actions/blob/main/.github/workflows/simple-build.yaml). I created one for my Minimap2 GitHub repository ([`.github/workflows/dockerhub.yaml`](https://github.com/Niema-Docker/minimap2/blob/main/.github/workflows/dockerhub.yaml)) that I should be used as a template for each subsequent repository. The only changes that should be needed are the following:
 
 * If the main branch of the GitHub repository is anything other than `main` (e.g. `master`), I need to change the branch listed in `on: push: branches:` from `main` to that branch name.
 * If the versioned release tags are named anything other than `*.*` (e.g. my tools are typically `*.*.*` or `v*.*.*`), I need to change the tag pattern listed in `on: push: tags:` from `"*.*"` to whatever version number pattern the tool (and thus GitHub repository) uses.
