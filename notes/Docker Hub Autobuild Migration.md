@@ -4,5 +4,5 @@ My Docker containers have been built in the cloud using [Docker Hub](https://hub
 # Step 1: Create Docker Hub Access Tokens
 All of my Docker containers are in my personal [niemasd](https://hub.docker.com/u/niemasd) Docker Hub account, so I need to create a [Personal Access Token](https://docs.docker.com/security/access-tokens/personal-access-tokens/).
 
-1. [Generate a new Personal Access Token](https://app.docker.com/accounts/niemasd/settings/personal-access-tokens/create) if necessary.
+1. [Generate a new Personal Access Token](https://app.docker.com/accounts/niemasd/settings/personal-access-tokens/create) with **Read & Write** permissions.
     * I can check [existing Personal Access Tokens](https://app.docker.com/accounts/niemasd/settings/personal-access-tokens) in my [Docker Account Settings](https://app.docker.com/accounts/niemasd).
