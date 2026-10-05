@@ -6,3 +6,5 @@ All of my Docker containers are in my personal [niemasd](https://hub.docker.com/
 
 1. [Generate a new Personal Access Token](https://app.docker.com/accounts/niemasd/settings/personal-access-tokens/create) with **Read & Write** permissions.
     * I can check [existing Personal Access Tokens](https://app.docker.com/accounts/niemasd/settings/personal-access-tokens) in my [Docker Account Settings](https://app.docker.com/accounts/niemasd).
+    * I should ideally use the same Personal Access Token for all of my repos (so create once, and reuse repeatedly).
+    * I saved it in my password manager's Docker credentials as "Access Token: GitHub Action Autobuild"
